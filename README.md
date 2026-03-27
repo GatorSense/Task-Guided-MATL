@@ -6,16 +6,16 @@
 
 This repository implements a task-guided approach to multi-annotation triplet learning (TG-MATL) for learning robust embeddings from remote sensing imagery. The framework compares different loss functions and task-head architectures across multiple embedding types (CLIP, DINOv2, MAE).
 
-## 📦 Repository Status
+## Repository Status
 
-**✅ Cleaned for Reproducibility**
+**Cleaned for Reproducibility**
 - Removed 936 lines of unused utility functions from `awir_utilities.py` (1146 → 211 lines)
 - Removed 152 lines of unused loss functions from `awir_custom_losses.py` (420 → 268 lines)  
 - Fixed imports across all experiment scripts to use only available functions
 - Standardized to relative paths for cross-platform reproducibility
 - Added comprehensive packaging (requirements.txt, setup.py, .gitignore)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## 📋 Data Requirements
+## Data Requirements
 
 Before running experiments, prepare the following:
 
@@ -76,7 +76,7 @@ The following modules are imported but not included. They should be provided sep
 
 Place these in the root directory alongside the scripts.
 
-## 📁 Directory Structure
+## Directory Structure
 
 ```
 Task-Guided-MATL/
@@ -126,7 +126,7 @@ Task-Guided-MATL/
         └── exp1_timings/           # Training time statistics
 ```
 
-## 🔧 Core Scripts
+## Core Scripts
 
 ### Experiment 1: Projection Head Training (`experiments/igarss_exp1.py`)
 
@@ -194,7 +194,7 @@ python igarss_exp2_sweep.py --margin 0.1 --batch_size 32 --test_size 0.7
 cd ..
 ```
 
-## 🛠️ Utility Modules (Cleaned)
+## Utility Modules
 
 ### `awir_utilities.py` (211 lines, 4 functions)
 **Available functions (only these needed):**
@@ -249,7 +249,7 @@ cd ..
 - vae_kl_loss
 - multilabel_focal_loss
 
-## 📊 Experimental Design
+## Experimental Design
 
 ### Cross-Validation
 - **8-fold Stratified K-Fold** on all samples
@@ -283,16 +283,16 @@ results/
     └── {embedding}/{method}_fold{i}_taskhead_metrics.npy
 ```
 
-## 📈 Reproducibility
+## Reproducibility
 
 This repository is designed for maximum reproducibility:
 
-✅ **Relative Paths** — All paths use `./data/`, `./embeddings/`, `./results/`  
-✅ **Fixed Random Seeds** — Set before data splits and model initialization  
-✅ **Deterministic CV** — StratifiedKFold with fixed random_state  
-✅ **Minimal Dependencies** — requirements.txt pins all package versions  
-✅ **Clean Code** — Removed all utility functions not used by experiments  
-✅ **Documented Imports** — All dependencies clearly specified  
+- **Relative Paths** — All paths use `./data/`, `./embeddings/`, `./results/`
+- **Fixed Random Seeds** — Set before data splits and model initialization
+- **Deterministic CV** — StratifiedKFold with fixed random_state
+- **Minimal Dependencies** — requirements.txt pins all package versions
+- **Clean Code** — Removed all utility functions not used by experiments
+- **Documented Imports** — All dependencies clearly specified  
 
 **To reproduce results:**
 1. Install dependencies: `pip install -r requirements.txt`
@@ -307,7 +307,7 @@ This repository is designed for maximum reproducibility:
    ```
 5. Results saved to `./results/` with proper structure
 
-## 📝 Citation
+## Citation
 
 If you use this code, please cite:
 
@@ -319,15 +319,15 @@ If you use this code, please cite:
 }
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 📧 Contact
+## Contact
 
 For questions or issues, please contact: m.zhou@example.com
 
 ---
 
-**Last Updated:** March 2026  
-**Status:** ✅ Cleaned & Packaged for Reproducibility
+**Last Updated:** March 2026
+**Status:** Cleaned & Packaged for Reproducibility
