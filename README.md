@@ -6,15 +6,6 @@
 
 This repository implements a task-guided approach to multi-annotation triplet learning (TG-MATL) for learning robust embeddings from remote sensing imagery. The framework compares different loss functions and task-head architectures across multiple embedding types (CLIP, DINOv2, MAE).
 
-## Repository Status
-
-**Cleaned for Reproducibility**
-- Removed 936 lines of unused utility functions from `awir_utilities.py` (1146 → 211 lines)
-- Removed 152 lines of unused loss functions from `awir_custom_losses.py` (420 → 268 lines)  
-- Fixed imports across all experiment scripts to use only available functions
-- Standardized to relative paths for cross-platform reproducibility
-- Added comprehensive packaging (requirements.txt, setup.py, .gitignore)
-
 ## Quick Start
 
 ### Prerequisites
@@ -75,56 +66,6 @@ The following modules are imported but not included. They should be provided sep
 - `TripletNetwork_Online` — Neural network architectures (projection/task heads)
 
 Place these in the root directory alongside the scripts.
-
-## Directory Structure
-
-```
-Task-Guided-MATL/
-├── matl/                           # Core package (Python module)
-│   ├── __init__.py                 # Package initialization & exports
-│   ├── awir_utilities.py           # Data processing (211 lines, 4 functions)
-│   └── awir_custom_losses.py       # Loss functions (268 lines, 10 functions)
-│
-├── experiments/                    # Experiment scripts
-│   ├── igarss_exp1.py              # Projection head training
-│   ├── igarss_exp1_sweep.py        # TG-MATL parameter sweep
-│   ├── igarss_exp2.py              # Task head training
-│   └── igarss_exp2_sweep.py        # Task heads with sweep parameters
-│
-├── Configuration & Packaging
-│   ├── environment.yml             # Conda environment specification
-│   ├── requirements.txt            # pip dependencies
-│   ├── setup.py                    # Package setup
-│   ├── .gitignore                  # Git patterns (excludes data, results)
-│   └── README.md                   # This file
-│
-├── Input Data (user-provided)
-│   ├── data.npz                    # Input data file
-│   └── embeddings/                 # Pre-computed embeddings
-│       ├── awir_clip_emb.npy
-│       ├── awir_dinov2_emb.npy
-│       └── awir_mae_emb.npy
-│
-├── Results (generated)
-│   └── results/
-│       ├── trained_models/         # Trained projection heads & task heads
-│       ├── exp1_test_projections/  # Test embeddings from Exp1
-│       ├── exp2_results/           # Task head evaluation metrics
-│       └── exp1_timings/           # Training time statistics
-```
-│   ├── data.npz                    # Input data file
-│   └── embeddings/                 # Pre-computed embeddings
-│       ├── awir_clip_emb.npy
-│       ├── awir_dinov2_emb.npy
-│       └── awir_mae_emb.npy
-│
-└── Results (generated)
-    └── results/
-        ├── trained_models/         # Trained projection heads & task heads
-        ├── exp1_test_projections/  # Test embeddings from Exp1
-        ├── exp2_results/           # Task head evaluation metrics
-        └── exp1_timings/           # Training time statistics
-```
 
 ## Core Scripts
 
@@ -194,61 +135,6 @@ python igarss_exp2_sweep.py --margin 0.1 --batch_size 32 --test_size 0.7
 cd ..
 ```
 
-## Utility Modules
-
-### `awir_utilities.py` (211 lines, 4 functions)
-**Available functions (only these needed):**
-
-- **`compute_per_sample_metric(y_cls_encoded, y_box_features, metric='mi')`**
-  - Computes mutual information or ANOVA between class labels and box features
-  - Used for task-guided sample weighting in TG-MATL
-  - Returns: per-sample metric scores (N,)
-
-- **`generate_triplet_box_label_normalized(y_box, y_cls, n_clusters=3, ...)`**
-  - Creates box triplet labels using KMeans clustering on normalized box geometry
-  - Generates 13 normalized geometric features (width, height, area, etc.)
-  - Returns: triplet labels (N,), feature matrix (N, 13)
-
-- **`global_max_normalize(data)`**
-  - Normalizes image data by dividing by global maximum value
-  - Input: (N, H, W, C) array
-  - Returns: normalized array in [0, 1]
-
-- **`assign_tile_labels(y_box_cenwh)`**
-  - Assigns 3×3 spatial grid labels based on box center coordinates
-  - Input: (N, 4) as [x_center, y_center, width, height] (normalized)
-  - Returns: tile labels (N,) in range [0, 8]
-
-**Removed functions** (936 lines):
-- Comet ML logging (plot_pca_umap, log_3d_pca, log_weight_distribution, etc.)
-- Model loading utilities (load_embedding_model, load_mm_embedding_model)
-- IoU/mask calculations (calculate_iou, calculate_mask_iou, adjust_and_calculate_iou_mask)
-- Resampling (resampling, generate_prototypes_with_cosine_distance)
-- Feature weighting (weigh_features, weigh_features_multi, compute_label_weights)
-- Unused label generators (generate_triplet_box_label, generate_triplet_box_label_one_hot)
-
-### `awir_custom_losses.py` (268 lines, 10 functions)
-**Available loss functions:**
-
-- **`keras_batch_all_triplet_loss(margin=0.0)`** — DTL loss function wrapper
-- **`keras_batch_all_triplet_loss_hard(margin=0.0)`** — Hard DTL variant
-- **`keras_batch_all_triplet_double_loss(margin=0.0, box_weight=0.5)`** — MATL loss
-- **`keras_batch_all_triplet_double_loss_top_random(...)`** — TG-MATL loss with sample selection
-- **`compute_selection_mask_tf(labels_clf, sample_metric, top_percent, random_percent)`** — TG-MATL sample selector
-- **`keras_batch_all_triplet_continuous_loss_final(margin=0.01)`** — Box feature triplet loss
-- **`keras_batch_all_continuous_triplet_loss_final_adjustable_comparisons(num_comparisons)`** — Adjustable comparisons
-- **`ciou_loss(y_true, y_pred, alpha=0.5)`** — Complete IoU loss for boxes
-- **`dice_loss(y_true, y_pred, smooth=1e-6)`** — Dice loss (segmentation-style)
-- **`ssim_loss(alpha=0.1)`** — SSIM + MSE combined loss
-
-**Removed functions** (152 lines):
-- keras_batch_all_triplet_continuous_loss_final_weighted variants
-- keras_batch_all_continuous_prototype_loss variants
-- keras_batch_all_triplet_continuous_loss
-- keras_batch_all_triplet_continuous_loss_multimodal
-- vae_kl_loss
-- multilabel_focal_loss
-
 ## Experimental Design
 
 ### Cross-Validation
@@ -291,7 +177,6 @@ This repository is designed for maximum reproducibility:
 - **Fixed Random Seeds** — Set before data splits and model initialization
 - **Deterministic CV** — StratifiedKFold with fixed random_state
 - **Minimal Dependencies** — requirements.txt pins all package versions
-- **Clean Code** — Removed all utility functions not used by experiments
 - **Documented Imports** — All dependencies clearly specified  
 
 **To reproduce results:**
@@ -330,4 +215,3 @@ For questions or issues, please contact: m.zhou@example.com
 ---
 
 **Last Updated:** March 2026
-**Status:** Cleaned & Packaged for Reproducibility
