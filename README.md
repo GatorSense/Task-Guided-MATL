@@ -26,11 +26,6 @@ conda activate matl
 pip install -r requirements.txt
 ```
 
-**Option 3: Development install**
-```bash
-pip install -e .
-```
-
 ## Data Requirements
 
 Before running experiments, prepare the following:
@@ -192,17 +187,6 @@ This repository is designed for maximum reproducibility:
    ```
 5. Results saved to `./results/` with proper structure
 
-## Citation
-
-If you use this code, please cite:
-
-```bibtex
-@article{zhou2024task,
-  title={Task-Guided Multi-Annotation Triplet Learning for Remote Sensing Representations},
-  author={Zhou, M. and ...},
-  year={2024}
-}
-```
 
 ## License
 
@@ -210,7 +194,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For questions or issues, please contact: m.zhou@example.com
+For questions or issues, please contact: m.zhou@ufl.edu
 
 ---
 
