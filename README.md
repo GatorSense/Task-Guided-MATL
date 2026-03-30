@@ -194,7 +194,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For questions or issues, please contact: m.zhou@ufl.edu
+For questions or issues, please contact: zhou.m@ufl.edu
 
 ---
 
