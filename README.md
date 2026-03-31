@@ -2,9 +2,12 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+
 **Task-Guided Multi-Annotation Triplet Learning for Remote Sensing Representations**
 
 This repository implements a task-guided approach to multi-annotation triplet learning (TG-MATL) for learning robust embeddings from remote sensing imagery. The framework compares different loss functions and task-head architectures across multiple embedding types (CLIP, DINOv2, MAE).
+
+Managed by [Meilun Zhou](https://www.linkedin.com/in/meilun-zhou/) through [GatorSense](https://faculty.eng.ufl.edu/machine-learning/).
 
 ## Quick Start
 
